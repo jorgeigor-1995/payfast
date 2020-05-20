@@ -1,0 +1,6 @@
+node_modules
+config.js
+uploads
+.DS_Store
+pdfs
+xml
