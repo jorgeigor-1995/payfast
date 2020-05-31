@@ -1,5 +1,4 @@
 const express = require('express');
-const consign = require('consign');
 const bodyParser = require("body-parser");
 
 module.exports = () =>{
@@ -8,6 +7,6 @@ module.exports = () =>{
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   
-  app.use("/pagamentos", require('../app/pagamentos'));
+  app.use("/cartao", require('../app/cartao'));
   return app;
 }

@@ -1,21 +1,20 @@
 {
-  "name": "payfast",
+  "name": "cardfast",
   "version": "1.0.0",
-  "description": "um gateway para pagamento atraves de recursos http.",
+  "description": "um gateway para gerenciamento de cartao atraves de recursos http.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "gateway",
-    "pagamentos",
+    "cartao",
     "api"
   ],
   "author": "Jorge Igor A. R. Silva",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "consign": "^0.1.6",
     "express": "^4.17.1",
     "mongoose": "^5.9.15"
   }
