@@ -1,0 +1,25 @@
+{
+  "name": "payfast",
+  "version": "1.0.0",
+  "description": "um gateway para pagamento atraves de recursos http.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gateway",
+    "pagamentos",
+    "api"
+  ],
+  "author": "Jorge Igor A. R. Silva",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15",
+    "restify": "^8.5.1",
+    "restify-clients": "^2.6.9"
+  }
+}
