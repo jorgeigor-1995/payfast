@@ -8,6 +8,7 @@ module.exports = () =>{
   app.use(bodyParser.json());
   app.use("/correio", require('../app/correio'));
   app.use("/pagamentos", require('../app/pagamentos'));
+  app.use('/upload', require('../app/upload'));
   
   
   return app;
