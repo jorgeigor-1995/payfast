@@ -2,10 +2,25 @@ const Model = require('./model');
 const to = require('../../core/to');
 const restify = require('restify-clients');
 
+exports.get = async (req, res) => {
+  let id = req.params.id;
+  console.log('consultando pagamento: '+ id );
+  const [ err, data] = await to(Model.findOne({ _id: id}));
+  if (!err){
+    console.log('Pagamento encontrado: ' + data);
+    res.json({ sucess: true, data: data});
+  }else{
+    console.log('Pagamento não encontrado');
+    res.status(500).json({ err: err,sucess: false });
+  }
+}
+
 exports.index = async (req, res) => {
   const data = await Model.find({});
   if (data) {
     res.json({ sucess: true, data: data })
+  }else{
+    res.json({ sucess: false })
   }
 }
 
