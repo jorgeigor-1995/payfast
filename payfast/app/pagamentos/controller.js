@@ -1,8 +1,6 @@
 const Model = require('./model');
 const to = require('../../core/to');
-const app = require('../../config/custom-express');
-const clienteCartoes = require('../../services/clienteCartoes');
-const restify= require('restify-clients');
+const restify = require('restify-clients');
 
 exports.index = async (req, res) => {
   const data = await Model.find({});
@@ -49,28 +47,44 @@ exports.new = async (req, res) => {
 
   pagamento.status = "CRIADO";
   pagamento.data = new Date;
-  if (req.body.pagamento.forma_de_pagamento === 'cartao') {
-    const cartao = req.body["cartao"];
-    
-    const client = await restify.createJSONClient({
-      url:"http://localhost:3031",
-    });
 
-    client.post('/cartao/autoriza', cartao , (err, requisicao, response, resposta) => {
-      if(!err){
-        console.log("pagamento criado");
-      res.status(201).json({
-        erro: err, data: resposta })
-      } else {
-        console.log("Erro ao inserir no banco: " + err);
-        res.status(500).json({ erro: err });
-      };
-    });
+  const model = new Model(pagamento);
+  const [err, data] = await to(model.save());
 
-  } else {
-    const model = new Model(pagamento);
-    const [err, data] = await to(model.save());
-    if (!err) {
+  if (!err) {
+    if (req.body.pagamento.forma_de_pagamento === 'cartao') {
+      const cartao = req.body["cartao"];
+
+      const client = await restify.createJSONClient({
+        url: "http://localhost:3031",
+      });
+
+      client.post('/cartao/autoriza', cartao, (erro, requisicao, response, resposta) => {
+        if (!erro) {
+          console.log("pagamento criado com cartao");
+          res.status(201).json({
+            erro: erro, cartao: resposta, data: data,
+            links: [{
+              href: "http://localhost:3030/pagamentos/pagamento/" + data._id,
+              rel: "confirmar",
+              method: "PUT"
+            }, {
+              href: "http://localhost:3030/pagamentos/pagamento/" + data._id,
+              rel: "cancelar",
+              method: "DELETE"
+            }, {
+              href: "http://localhost:3030/pagamentos",
+              ref: "listar",
+              method: "GET"
+            }
+            ]
+          })
+        } else {
+          console.log("Erro ao inserir no banco: " + erro);
+          res.status(400).json({ erro: erro });
+        };
+      });
+    } else {
       console.log("pagamento criado");
       res.status(201).json({
         erro: err, data: data,
@@ -89,13 +103,11 @@ exports.new = async (req, res) => {
         }
         ]
       });
-    } else {
-      console.log("Erro ao inserir no banco: " + err);
-      res.status(500).json({ erro: err });
     }
-
+  } else {
+    console.log("Erro ao inserir no banco: " + err);
+    res.status(500).json({ erro: err });
   }
-
 }
 
 exports.delete = async (req, res) => {
