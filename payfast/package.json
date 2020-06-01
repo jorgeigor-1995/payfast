@@ -20,8 +20,10 @@
     "express": "^4.17.1",
     "memcached": "^2.2.2",
     "mongoose": "^5.9.15",
+    "morgan": "^1.10.0",
     "restify": "^8.5.1",
     "restify-clients": "^2.6.9",
-    "soap": "^0.31.0"
+    "soap": "^0.31.0",
+    "winston": "^3.2.1"
   }
 }

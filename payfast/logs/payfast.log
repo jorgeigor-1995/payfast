@@ -1,0 +1,2 @@
+{"message":"Pagamento encontrado","level":"info"}
+{"message":"::ffff:127.0.0.1 - - [01/Jun/2020:18:36:12 +0000] \"GET /pagamentos/pagamento/5ed54589ab0bc01bed246c48 HTTP/1.1\" 200 203\n","level":"info"}
